@@ -1,0 +1,38 @@
+.bsp
+.bloop
+.metals
+
+# These are generated when we run the build
+/emulator/
+/examples/target/
+/examples/project/target/
+/hello/project/target/
+/hello/target/
+/problems/project/target/
+/problems/target/
+/solutions/project/target/
+/solutions/target/
+/generated*/
+/project/.bloop
+/project/project
+/project/metals.sbt
+.idea
+*.h
+*.cpp
+*.o
+*.iml
+*.im24
+*.swp
+*.out
+/bin/
+target
+
+# sbt run folder
+/test_run_dir/
+
+# Eclipse files
+.cache-main
+.cache-tests
+.classpath
+.project
+.settings/
