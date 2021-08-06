@@ -1,0 +1,179 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x797E5F3ED61421A3",
+      "device": "xc7a35ticsg324-1L",
+      "gen_directory": "../../../../processormon.gen/sources_1/bd/processormon",
+      "name": "processormon",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2020.2",
+      "validated": "true"
+    },
+    "design_tree": {
+      "clk_wiz_0": "",
+      "BlinkerGenerator_0": "",
+      "reset_inv_0": ""
+    },
+    "ports": {
+      "sys_clock": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "processormon_sys_clock",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000"
+          }
+        }
+      },
+      "led": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "reset": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "POLARITY": {
+            "value": "ACTIVE_LOW"
+          }
+        }
+      }
+    },
+    "components": {
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "processormon_clk_wiz_0_0",
+        "xci_path": "ip/processormon_clk_wiz_0_0/processormon_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLK_IN1_BOARD_INTERFACE": {
+            "value": "sys_clock"
+          },
+          "RESET_BOARD_INTERFACE": {
+            "value": "reset"
+          },
+          "USE_BOARD_FLOW": {
+            "value": "true"
+          }
+        }
+      },
+      "BlinkerGenerator_0": {
+        "vlnv": "xilinx.com:module_ref:BlinkerGenerator:1.0",
+        "xci_name": "processormon_BlinkerGenerator_0_0",
+        "xci_path": "ip/processormon_BlinkerGenerator_0_0/processormon_BlinkerGenerator_0_0.xci",
+        "inst_hier_path": "BlinkerGenerator_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "BlinkerGenerator",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clock": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_HIGH",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "io_led": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          }
+        }
+      },
+      "reset_inv_0": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "xci_name": "processormon_reset_inv_0_0",
+        "xci_path": "ip/processormon_reset_inv_0_0/processormon_reset_inv_0_0.xci",
+        "inst_hier_path": "reset_inv_0",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "not"
+          },
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
+      }
+    },
+    "nets": {
+      "sys_clock_1": {
+        "ports": [
+          "sys_clock",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "clk_wiz_0_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "BlinkerGenerator_0/clock"
+        ]
+      },
+      "BlinkerGenerator_0_io_led": {
+        "ports": [
+          "BlinkerGenerator_0/io_led",
+          "led"
+        ]
+      },
+      "reset_1": {
+        "ports": [
+          "reset",
+          "reset_inv_0/Op1"
+        ]
+      },
+      "reset_inv_0_Res": {
+        "ports": [
+          "reset_inv_0/Res",
+          "clk_wiz_0/reset",
+          "BlinkerGenerator_0/reset"
+        ]
+      }
+    }
+  }
+}
