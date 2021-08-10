@@ -3,17 +3,30 @@ module BlinkerGenerator(
   input        reset,
   output [3:0] io_led
 );
-  reg [31:0] cntReg; // @[Bilnker.scala 20:23]
+`ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
-  reg [3:0] blkReg; // @[Bilnker.scala 21:23]
   reg [31:0] _RAND_1;
-  wire [31:0] _T_1; // @[Bilnker.scala 23:20]
-  wire  _T_2; // @[Bilnker.scala 24:15]
-  wire [3:0] _T_3; // @[Bilnker.scala 26:15]
-  assign _T_1 = cntReg + 32'h1; // @[Bilnker.scala 23:20]
-  assign _T_2 = cntReg == 32'h17d783f; // @[Bilnker.scala 24:15]
-  assign _T_3 = ~ blkReg; // @[Bilnker.scala 26:15]
+`endif // RANDOMIZE_REG_INIT
+  reg [31:0] cntReg; // @[Bilnker.scala 20:23]
+  reg [3:0] blkReg; // @[Bilnker.scala 21:23]
+  wire [31:0] _cntReg_T_1 = cntReg + 32'h1; // @[Bilnker.scala 23:20]
+  wire [3:0] _blkReg_T = ~blkReg; // @[Bilnker.scala 26:15]
   assign io_led = blkReg; // @[Bilnker.scala 28:10]
+  always @(posedge clock) begin
+    if (reset) begin // @[Bilnker.scala 20:23]
+      cntReg <= 32'h0; // @[Bilnker.scala 20:23]
+    end else if (cntReg == 32'h17d783f) begin // @[Bilnker.scala 24:28]
+      cntReg <= 32'h0; // @[Bilnker.scala 25:12]
+    end else begin
+      cntReg <= _cntReg_T_1; // @[Bilnker.scala 23:10]
+    end
+    if (reset) begin // @[Bilnker.scala 21:23]
+      blkReg <= 4'h0; // @[Bilnker.scala 21:23]
+    end else if (cntReg == 32'h17d783f) begin // @[Bilnker.scala 24:28]
+      blkReg <= _blkReg_T; // @[Bilnker.scala 26:12]
+    end
+  end
+// Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -33,6 +46,9 @@ module BlinkerGenerator(
   integer initvar;
 `endif
 `ifndef SYNTHESIS
+`ifdef FIRRTL_BEFORE_INITIAL
+`FIRRTL_BEFORE_INITIAL
+`endif
 initial begin
   `ifdef RANDOMIZE
     `ifdef INIT_RANDOM
@@ -45,29 +61,16 @@ initial begin
         #0.002 begin end
       `endif
     `endif
-  `ifdef RANDOMIZE_REG_INIT
+`ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
   cntReg = _RAND_0[31:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
   blkReg = _RAND_1[3:0];
-  `endif // RANDOMIZE_REG_INIT
+`endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
+`ifdef FIRRTL_AFTER_INITIAL
+`FIRRTL_AFTER_INITIAL
+`endif
 `endif // SYNTHESIS
-  always @(posedge clock) begin
-    if (reset) begin
-      cntReg <= 32'h0;
-    end else if (_T_2) begin
-      cntReg <= 32'h0;
-    end else begin
-      cntReg <= _T_1;
-    end
-    if (reset) begin
-      blkReg <= 4'h0;
-    end else if (_T_2) begin
-      blkReg <= _T_3;
-    end
-  end
 endmodule
